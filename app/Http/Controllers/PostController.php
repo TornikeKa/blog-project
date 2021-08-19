@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,9 @@ class PostController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-    public function index()
-    {
+    public function index(Post $post) {
         $posts = auth()->user()->posts;
+        //dd($posts);
         return  view('index', compact('posts'));
     }
     public function store() {

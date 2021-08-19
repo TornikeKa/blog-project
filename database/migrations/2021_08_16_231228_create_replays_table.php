@@ -16,6 +16,7 @@ class CreateReplaysTable extends Migration
         Schema::create('replays', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('comment_id');
+            $table->unsignedBigInteger('post_id');
             $table->string('replay');
             $table->timestamps();
         });

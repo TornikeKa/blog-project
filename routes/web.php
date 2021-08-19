@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;
 //use Illuminate\Support\Facades\RateLimiter;
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,9 @@ Route::fallback(function () {
 
 Auth::routes();
 
-
 Route::view('/posts/create', 'posts.create');
+Route::view('/contacts', 'contacts.show');
 Route::post('/posts', [PostController::class, 'store']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
 Route::post('/posts/{post}', [CommentController::class, 'store']);
-

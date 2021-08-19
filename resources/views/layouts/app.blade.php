@@ -36,7 +36,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/contact">Contact</a>
+                            <a class="nav-link" href="/contacts">Contact</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest
@@ -56,7 +56,6 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/userPosts">My Posts</a>
                                     <a class="dropdown-item" href="/userSettings">My Settings</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -76,6 +75,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <div>
+            @include('layouts.footer')
+        </div>
     </div>
 </body>
 </html>

@@ -34,7 +34,7 @@
                         @foreach($posts as $post)
                             <div class="col">
                                 <div class="card mt-4">
-                                    <!--<img src="{{ $post->image_path }}" class="card-img-top" alt="Sorry image couldn't be loaded">-->
+{{--                                    <img src="{{ $post->image_path }}" class="card-img-top" alt="Sorry image couldn't be loaded">--}}
                                     <div class="card-body">
                                         <a href="posts/{{ $post->id }}">
                                         <h5 class="card-title">{{ $post->title }}</h5>
