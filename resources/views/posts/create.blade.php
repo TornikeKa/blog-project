@@ -16,7 +16,7 @@
 
                                 <div class="col-md-6">
                                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                                           value="{{ old('title') }}" autofocus placeholder="Enter Title">
+                                           value="{{ old('title') }}" autofocus placeholder="Enter Title" autocomplete="off">
 
                                     @error('title')
                                     <span class="invalid-feedback" role="alert">

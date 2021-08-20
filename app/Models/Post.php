@@ -8,20 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = ['title', 'description', 'image_path'];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
     public function comments() {
         return $this->hasMany(Comment::class);
-    }
-    public function sluggable(): array
-    {
-        return[
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
     }
 }

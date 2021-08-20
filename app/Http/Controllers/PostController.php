@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -17,7 +16,7 @@ class PostController extends Controller
         //dd($posts);
         return  view('index', compact('posts'));
     }
-    public function store() {
+    public function store(Request $request) {
         $data = request()->validate([
             'title' => 'required',
             'description' => 'required',
@@ -28,10 +27,26 @@ class PostController extends Controller
 
         return redirect('/posts/'.$post->id);
     }
-
     public function show(Post $post) {
         $post->load('comments.replays');
         //dd($post);
         return view('posts.show', compact('post', ));
+    }
+    public function edit(Post $post) {
+        return view('posts.edit', compact('post', ));
+    }
+    public function update(Request $request) {
+        $data = request()->validate([
+            'title'=>'required',
+            'description'=>'required'
+        ]);
+
+        $post = auth()->user()->posts()->update($data);
+
+        return redirect('/');
+    }
+    public function delete(Post $post) {
+        $post->delete();
+        redirect('/posts');
     }
 }

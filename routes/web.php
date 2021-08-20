@@ -27,12 +27,19 @@ Route::fallback(function () {
 //});
 
 
-
 Auth::routes();
 
+Route::view('/settings', 'user.settings');
 Route::view('/posts/create', 'posts.create');
+Route::view('/posts/delete', 'posts.delete');
 Route::view('/contacts', 'contacts.show');
 Route::post('/posts', [PostController::class, 'store']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+Route::patch('/posts/{post}', [PostController::class, 'update']);
+Route::delete('/posts/{post}',[PostController::class, 'delete']);
+
+
+Route::view('/posts/delete', [PostController::class, 'edit']);
 
 Route::post('/posts/{post}', [CommentController::class, 'store']);
