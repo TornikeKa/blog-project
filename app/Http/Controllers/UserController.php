@@ -11,6 +11,18 @@ class UserController extends Controller
         $this->middleware('auth');
     }
     public function show(User $user) {
+        //$user = auth()->user()->user;
+        //dd($user);
         return view('user.settings', compact('user'));
+    }
+    public function update() {
+        $data = request()->validate([
+            'name'=>'required',
+            'email'=>'required'
+        ]);
+
+        $post = auth()->user()->update($data);
+
+        return redirect('/');
     }
 }

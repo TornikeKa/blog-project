@@ -8,15 +8,18 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
-    public function index(Post $post) {
+    public function index(Post $post)
+    {
         $posts = auth()->user()->posts;
         //dd($posts);
         return  view('index', compact('posts'));
     }
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $data = request()->validate([
             'title' => 'required',
             'description' => 'required',
@@ -27,15 +30,18 @@ class PostController extends Controller
 
         return redirect('/posts/'.$post->id);
     }
-    public function show(Post $post) {
+    public function show(Post $post)
+    {
         $post->load('comments.replays');
         //dd($post);
         return view('posts.show', compact('post', ));
     }
-    public function edit(Post $post) {
+    public function edit(Post $post)
+    {
         return view('posts.edit', compact('post', ));
     }
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $data = request()->validate([
             'title'=>'required',
             'description'=>'required'
@@ -45,8 +51,9 @@ class PostController extends Controller
 
         return redirect('/');
     }
-    public function delete(Post $post) {
+    public function delete(Post $post)
+    {
         $post->delete();
-        redirect('/posts');
+        return redirect('/');
     }
 }

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
-//use Illuminate\Support\Facades\RateLimiter;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,16 +19,11 @@ Route::get('/', [PostController::class, 'index']);
 Route::fallback(function () {
     return view('fallback');
 });
-//RateLimiter::for('/', function (Request $request) {
-//    return $request->user()
-//        ? Limit::perMinute(10)->by($request->user()->id)
-//        : Limit::perMinute(10)->by($request->ip());
-//});
-
 
 Auth::routes();
 
-Route::view('/settings', 'user.settings');
+Route::get('/settings/{user}', [UserController::class, 'show']);
+Route::patch('/settings/{user}', [UserController::class, 'update']);
 Route::view('/posts/create', 'posts.create');
 Route::view('/posts/delete', 'posts.delete');
 Route::view('/contacts', 'contacts.show');
@@ -40,6 +34,5 @@ Route::patch('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}',[PostController::class, 'delete']);
 
 
-Route::view('/posts/delete', [PostController::class, 'edit']);
 
 Route::post('/posts/{post}', [CommentController::class, 'store']);
