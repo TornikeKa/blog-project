@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">Create Post</div>
+                    <div class="card-header">Edit Post</div>
 
                     <div class="card-body">
                         <form method="post" action="/posts/{{$post->id}}" enctype="multipart/form-data">
@@ -57,7 +57,6 @@
                                     @enderror
                                 </label>
                             </div>
-
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

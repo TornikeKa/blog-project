@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Http\Requests\PostValidationRequests;
 
 class PostController extends Controller
 {
@@ -12,47 +12,106 @@ class PostController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index(Post $post)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $posts = auth()->user()->posts;
-        //dd($posts);
-        return  view('index', compact('posts'));
+        return  view('index')->with('posts', Post::orderBy('updated_at', 'DESC')->paginate(6));
     }
-    public function store(Request $request)
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'image_path' => 'required'
-        ]);
+        return view('posts.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(PostValidationRequests $request)
+    {
+        $data = $request->validated();
+        //dd($request->title);
+        $newImageName = time() . '-' . $request->title . '.'.
+        $request->image_path->extension();
+
+        $request->image_path->move(public_path('images'), $newImageName);
+        $data['image_path'] = $newImageName;
+        //dd($data);
 
         $post = auth()->user()->posts()->create($data);
 
         return redirect('/posts/'.$post->id);
     }
-    public function show(Post $post)
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $post->load('comments.replays');
         //dd($post);
-        return view('posts.show', compact('post', ));
+        $post = Post::where('id', $id)->with('user')->with('comments')->first();
+        //dd($post);
+        return view('posts.show', compact('post'));
     }
-    public function edit(Post $post)
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        return view('posts.edit', compact('post', ));
+        return view('posts.edit')
+            ->with('post', Post::where('id', $id)->first());
     }
-    public function update(Request $request)
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(PostValidationRequests $request, $id)
     {
-        $data = request()->validate([
-            'title'=>'required',
-            'description'=>'required'
-        ]);
+        $data = $request->validated();
 
-        $post = auth()->user()->posts()->update($data);
+        $newImageName = time() . '-' . $request->title . '.'.
+            $request->image_path->extension();
 
+        $request->image_path->move(public_path('images'), $newImageName);
+
+        $data['image_path'] = $newImageName;
+        //dd($data);
+        auth()->user()->posts()->where('id', $id)->update($data);
         return redirect('/');
     }
-    public function delete(Post $post)
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
     {
+
+        unlink($_SERVER['DOCUMENT_ROOT']. "\images\\" . $post->image_path);
         $post->delete();
         return redirect('/');
     }

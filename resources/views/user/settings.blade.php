@@ -31,20 +31,6 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="mb-3">
-                                <label for="password" >Account Password</label>
-                                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
-                                       name="password" placeholder="New Password">
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="confirm-password"
-                                       name="password_confirmation" placeholder="Confirm Password">
-                            </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

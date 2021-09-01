@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -35,6 +36,15 @@
                     <ul class="navbar-nav mr-auto"></ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li>
+                        <form action="/posts/search" method="POST" enctype="multipart/form-data">
+                            <div>
+                                @csrf
+                                <input type="search" name="search" id="search" placeholder="Search..." autocomplete="off"
+                                       class="form-control" required>
+                            </div>
+                        </form>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/contacts">Contact</a>
                         </li>

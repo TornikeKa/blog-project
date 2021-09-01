@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,17 +23,14 @@ Route::fallback(function () {
 
 Auth::routes();
 
+
 Route::get('/settings/{user}', [UserController::class, 'show']);
 Route::patch('/settings/{user}', [UserController::class, 'update']);
-Route::view('/posts/create', 'posts.create');
-Route::view('/posts/delete', 'posts.delete');
+
 Route::view('/contacts', 'contacts.show');
-Route::post('/posts', [PostController::class, 'store']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
-Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
-Route::patch('/posts/{post}', [PostController::class, 'update']);
-Route::delete('/posts/{post}',[PostController::class, 'delete']);
 
+Route::resource('/posts', PostController::class);
 
+Route::post('/posts/search', [SearchController::class, 'searchPost']);
 
 Route::post('/posts/{post}', [CommentController::class, 'store']);

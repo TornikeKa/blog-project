@@ -5,6 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card mt-4">
+                    <img src="{{ asset('images/'.$post->image_path) }}" class="card-img-top" alt="Sorry images couldn't be loaded">
                     <div class="card-header">{{ $post->title }}</div>
 
                     <div class="card-body">

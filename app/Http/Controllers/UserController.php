@@ -15,10 +15,10 @@ class UserController extends Controller
         //dd($user);
         return view('user.settings', compact('user'));
     }
-    public function update() {
-        $data = request()->validate([
-            'name'=>'required',
-            'email'=>'required'
+    public function update(Request $request) {
+        $data = $request->validate([
+            'name'=>'required|string|max:255',
+            'email'=>'required|string|email|max:255'
         ]);
 
         $post = auth()->user()->update($data);

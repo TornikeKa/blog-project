@@ -11,9 +11,9 @@ class CommentController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-    public function store(Post $post) {
-        $data = request()->validate([
-            'comment' => 'required',
+    public function store(Post $post, Request $request) {
+        $data = $request->validate([
+            'comment' => 'required|string|max:255',
         ]);
         $data['post_id'] = $post->id;
         $data['user_id'] = $post->user_id;
